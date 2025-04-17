@@ -111,7 +111,11 @@ sensor:
     accuracy_decimals: 1
     icon: mdi:solar-power
     lambda: |-
-      return id(pv_power).state / id(pv_voltage).state;
+      if (id(pv_voltage).state == 0) {
+        return 0.0;
+      } else {
+        return id(pv_power).state / id(pv_voltage).state;
+      }
 
   - platform: modbus_controller
     modbus_controller_id: smg_inverter
